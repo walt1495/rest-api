@@ -68,6 +68,14 @@ app.put('/usuario/:id', [verificarToken, verificarAdminRole], function(req, res)
                 error
             });
         }
+        if (!usuarioDB) {
+            return res.status(404).json({
+                ok: false,
+                error: {
+                    message: 'No se encontro usuario'
+                }
+            });
+        }
         res.json({
             ok: true,
             usuario: usuarioDB
@@ -85,7 +93,7 @@ app.delete('/usuario/:id', [verificarToken, verificarAdminRole], function(req, r
             });
         }
         if (!usuarioDB || !usuarioDB.estado) {
-            return res.status(400).json({
+            return res.status(404).json({
                 ok: false,
                 error: {
                     message: 'Usuario no encontrado'
